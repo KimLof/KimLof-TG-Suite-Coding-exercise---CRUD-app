@@ -1,30 +1,196 @@
-table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  table, th, td {
-    border: 1px solid black;
-  }
-  
-  th, td {
-    padding: 8px;
-    text-align: left;
-  }
-  
-  button {
-    margin: 0 4px;
-  }
+/* Container */
+.container {
+  width: 90%;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
 
-.ReactModal__Overlay {
-    background-color: rgba(0, 0, 0, 0.5);
-  }
-  
-  .ReactModal__Content {
-    max-width: 500px;
-    margin: auto;
-    padding: 20px;
-    background: white;
-    border-radius: 4px;
-  }
-  
+/* Header Row */
+.header-row {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 20px;
+}
+
+/* Table Styling */
+.user-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 1rem;
+  background-color: #f9f9f9;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.user-table th,
+.user-table td {
+  padding: 12px 15px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+.user-table th {
+  background-color: #4CAF50;
+  color: white;
+  font-weight: bold;
+}
+
+.user-table tr:hover {
+  background-color: #ddd;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+/* Buttons */
+button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.btn-primary {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.btn-secondary,
+.btn-danger {
+  background-color: #FF4136;
+  color: white;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 400px;
+  max-width: 90%;
+  position: relative;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* Event Modal Header */
+h2 {
+  margin-top: 0;
+  text-align: center;
+}
+
+/* Event List Styling */
+.event-list {
+  max-height: 150px;
+  overflow-y: auto;
+  margin-bottom: 15px;
+}
+
+.event-list li {
+  background-color: #f9f9f9;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+}
+
+/* Event Form Styling */
+.event-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.event-select,
+.event-input {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.add-event-button {
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.add-event-button:hover {
+  background-color: #0056b3;
+}
+
+/* Error Messages */
+.error,
+.error-message {
+  color: red;
+  font-size: 0.875rem;
+  margin-top: 10px;
+}
+
+/* Input and Button Specific Styling */
+input[type='text'] {
+  padding: 6px;
+  margin: 4px 0;
+  font-size: 1rem;
+}
+
+.btn-edit,
+.btn-save,
+.btn-cancel {
+  margin-right: 5px;
+  padding: 5px 10px;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.btn-cancel {
+  background-color: #6c757d;
+}
+
+.btn-save:hover,
+.btn-cancel:hover,
+.btn-edit:hover {
+  opacity: 0.8;
+}
+
+.addUser{
+  background-color:  #4CAF50;
+  align-content: left;
+}

@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { getUsers, deleteUser } from '../api';
-import { Link } from 'react-router-dom';
+import { getUsers, deleteUser, updateUser } from '../api'; // Import updateUser function
 import EventModal from './EventModal';
+import AddUserModal from './AddUserModal';
 
 const Users: React.FC = () => {
   const [users, setUsers] = useState<any[]>([]);
   const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEventModalOpen, setIsEventModalOpen] = useState(false);
+  const [isAddUserModalOpen, setIsAddUserModalOpen] = useState(false);
+  const [editingUserId, setEditingUserId] = useState<number | null>(null); // Track which user is being edited
+  const [editedName, setEditedName] = useState<string>(''); // Store the edited name
 
   useEffect(() => {
     fetchUsers();
@@ -24,30 +27,57 @@ const Users: React.FC = () => {
   const handleDelete = async (id: number) => {
     try {
       await deleteUser(id);
-      fetchUsers(); // Päivittää listan
-      setIsModalOpen(false) // SUlkee modal
+      fetchUsers();
+      setIsEventModalOpen(false);
     } catch (error) {
       console.error('Error deleting user:', error);
     }
   };
 
-  const openModal = (userId: number) => {
+  const openEventModal = (userId: number) => {
     setSelectedUserId(userId);
-    setIsModalOpen(true);
+    setIsEventModalOpen(true);
   };
 
-  const closeModal = () => {
-    setIsModalOpen(false);
+  const closeEventModal = () => {
+    setIsEventModalOpen(false);
     setSelectedUserId(null);
   };
 
+  const openAddUserModal = () => {
+    setIsAddUserModalOpen(true);
+  };
+
+  const closeAddUserModal = () => {
+    setIsAddUserModalOpen(false);
+  };
+
+  const startEditing = (userId: number, currentName: string) => {
+    setEditingUserId(userId);
+    setEditedName(currentName);
+  };
+
+  const cancelEditing = () => {
+    setEditingUserId(null);
+    setEditedName('');
+  };
+
+  const handleSave = async (userId: number) => {
+    try {
+      await updateUser(userId, { name: editedName }); // Update the user
+      fetchUsers(); // Refresh the user list
+      setEditingUserId(null); // Exit editing mode
+    } catch (error) {
+      console.error('Error updating user:', error);
+    }
+  };
+
   return (
-    <div>
-      <h1>Users</h1>
-      <Link to="/add-user">
-        <button>Add User</button>
-      </Link>
-      <table>
+    <div className="container">
+      <div className="header-row">
+        <button className="btn-primary" onClick={openAddUserModal}>Add User</button>
+      </div>
+      <table className="user-table">
         <thead>
           <tr>
             <th>ID</th>
@@ -58,27 +88,53 @@ const Users: React.FC = () => {
         </thead>
         <tbody>
           {users.map(user => (
-            <tr key={user.id}>
+            <tr key={user.id} onClick={() => openEventModal(user.id)}>
               <td>{user.id}</td>
-              <td>
-                <button onClick={() => openModal(user.id)}>{user.name}</button>
+              <td onClick={(e) => e.stopPropagation() /* Prevent modal from opening */}>
+                {editingUserId === user.id ? (
+                  <input
+                    type="text"
+                    value={editedName}
+                    onChange={(e) => setEditedName(e.target.value)}
+                    onClick={(e) => e.stopPropagation()} // Prevent row click when clicking input
+                  />
+                ) : (
+                  user.name
+                )}
               </td>
               <td>{new Date(user.createdAt).toLocaleString()}</td>
-              <td>
-                <Link to={`/edit-user/${user.id}`}>
-                  <button>Edit</button>
-                </Link>
-                <button onClick={() => handleDelete(user.id)}>Delete</button>
+              <td className="action-buttons" onClick={(e) => e.stopPropagation() /* Prevent modal */}>
+                {editingUserId === user.id ? (
+                  <>
+                    <button className="btn-save" onClick={() => handleSave(user.id)}>Save</button>
+                    <button className="btn-cancel" onClick={cancelEditing}>Cancel</button>
+                  </>
+                ) : (
+                  <>
+                                      <button className="btn-edit" onClick={(e) => {
+                      e.stopPropagation();
+                      startEditing(user.id, user.name);
+                    }}>Edit</button>
+                    <button className="btn-secondary" onClick={() => handleDelete(user.id)}>Delete</button>
+                  </>
+                )}
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+      
+      {/* Add User Modal */}
+      {isAddUserModalOpen && (
+        <AddUserModal isOpen={isAddUserModalOpen} onClose={closeAddUserModal} onUserAdded={fetchUsers} />
+      )}
+
+      {/* Event Modal */}
       {selectedUserId !== null && (
         <EventModal
           userId={selectedUserId}
-          isOpen={isModalOpen}
-          onClose={closeModal}
+          isOpen={isEventModalOpen}
+          onClose={closeEventModal}
         />
       )}
     </div>

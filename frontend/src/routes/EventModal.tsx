@@ -9,12 +9,11 @@ interface EventModalProps {
 
 const EventModal: React.FC<EventModalProps> = ({ userId, isOpen, onClose }) => {
   const [events, setEvents] = useState<any[]>([]);
-  const [newEventType, setNewEventType] = useState(''); 
+  const [newEventType, setNewEventType] = useState('');
   const [newEventValue, setNewEventValue] = useState('');
-  const [username, setUsername] = useState(''); 
-  const [error, setError] = useState(''); 
+  const [username, setUsername] = useState('');
+  const [error, setError] = useState('');
 
-// >Eventin tyypit
   const eventTypes = ['login', 'logout', 'payment', 'signup', 'error'];
 
   useEffect(() => {
@@ -36,7 +35,7 @@ const EventModal: React.FC<EventModalProps> = ({ userId, isOpen, onClose }) => {
   const fetchUser = async () => {
     try {
       const response = await getUserById(userId);
-      setUsername(response.data.name); 
+      setUsername(response.data.name);
     } catch (error) {
       console.error('Error fetching user:', error);
     }
@@ -47,7 +46,7 @@ const EventModal: React.FC<EventModalProps> = ({ userId, isOpen, onClose }) => {
       setError('Both Event Type and Event Value are required.');
       return;
     }
-    setError(''); // Poistaa errorin jos molemmissa kentissä on dataa
+    setError('');
     try {
       await createEvent({ userId, type: newEventType, value: newEventValue });
       setNewEventType('');
@@ -60,12 +59,18 @@ const EventModal: React.FC<EventModalProps> = ({ userId, isOpen, onClose }) => {
 
   if (!isOpen) return null;
 
+  const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    if (e.target === e.currentTarget) {
+      onClose();
+    }
+  };
+
   return (
-    <div className="modal">
+    <div className="modal-overlay" onClick={handleOverlayClick}>
       <div className="modal-content">
         <span className="close" onClick={onClose}>&times;</span>
         <h2>Events for {username}</h2>
-        <ul>
+        <ul className="event-list">
           {events.map(event => (
             <li key={event.id}>
               <div>
@@ -76,10 +81,11 @@ const EventModal: React.FC<EventModalProps> = ({ userId, isOpen, onClose }) => {
             </li>
           ))}
         </ul>
-        <div>
+        <div className="event-form">
           <select
             value={newEventType}
             onChange={(e) => setNewEventType(e.target.value)}
+            className="event-select"
           >
             <option value="" disabled>Select Event Type</option>
             {eventTypes.map(type => (
@@ -91,9 +97,10 @@ const EventModal: React.FC<EventModalProps> = ({ userId, isOpen, onClose }) => {
             value={newEventValue}
             onChange={(e) => setNewEventValue(e.target.value)}
             placeholder="Event Value"
+            className="event-input"
           />
-          <button onClick={handleAddEvent}>Add Event</button>
-          {error && <p className="error">{error}</p>} 
+          <button onClick={handleAddEvent} className="add-event-button">Add Event</button>
+          {error && <p className="error-message">{error}</p>}
         </div>
       </div>
     </div>

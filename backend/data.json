@@ -1,10 +1,56 @@
 {
   "users": [
     {
-      "name": "Kim",
+      "name": "Kim1",
       "id": 1,
-      "createdAt": "2024-09-18T14:07:16.891Z"
+      "createdAt": "2024-09-18T14:48:38.665Z"
+    },
+    {
+      "name": "Nina",
+      "id": 2,
+      "createdAt": "2024-09-18T14:58:17.058Z"
+    },
+    {
+      "name": "asd",
+      "id": 3,
+      "createdAt": "2024-09-18T15:15:05.693Z"
     }
   ],
-  "events": []
+  "events": [
+    {
+      "userId": 1,
+      "type": "logout",
+      "value": "ok",
+      "id": 1,
+      "createdAt": "2024-09-18T14:54:29.470Z"
+    },
+    {
+      "userId": 1,
+      "type": "login",
+      "value": "ok",
+      "id": 2,
+      "createdAt": "2024-09-18T14:54:41.003Z"
+    },
+    {
+      "userId": 2,
+      "type": "payment",
+      "value": "300 to kim",
+      "id": 3,
+      "createdAt": "2024-09-18T14:58:25.084Z"
+    },
+    {
+      "userId": 1,
+      "type": "logout",
+      "value": "OK",
+      "id": 4,
+      "createdAt": "2024-09-18T15:03:57.288Z"
+    },
+    {
+      "userId": 1,
+      "type": "logout",
+      "value": "asd",
+      "id": 5,
+      "createdAt": "2024-09-18T15:13:40.773Z"
+    }
+  ]
 }

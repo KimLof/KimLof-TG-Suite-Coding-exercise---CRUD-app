@@ -11,3 +11,6 @@ dist/
 build/
 # Environment variables
 .env
+
+backend/data.json
+data.json
