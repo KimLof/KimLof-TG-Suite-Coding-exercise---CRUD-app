@@ -1,51 +1,10 @@
 {
   "users": [
     {
-      "name": " Kim",
+      "name": "Kim",
       "id": 1,
-      "createdAt": "2024-09-18T13:12:03.074Z"
-    },
-    {
-      "name": "Tuukka",
-      "id": 2,
-      "createdAt": "2024-09-18T13:16:22.613Z"
+      "createdAt": "2024-09-18T14:07:16.891Z"
     }
   ],
-  "events": [
-    {
-      "userId": 1,
-      "type": "payment",
-      "value": "123",
-      "id": 1,
-      "createdAt": "2024-09-18T13:12:10.801Z"
-    },
-    {
-      "userId": 1,
-      "type": "login",
-      "value": "123",
-      "id": 2,
-      "createdAt": "2024-09-18T13:12:48.989Z"
-    },
-    {
-      "userId": 2,
-      "type": "logout",
-      "value": "2",
-      "id": 3,
-      "createdAt": "2024-09-18T13:16:31.391Z"
-    },
-    {
-      "userId": 2,
-      "type": "error",
-      "value": "??",
-      "id": 4,
-      "createdAt": "2024-09-18T13:16:38.658Z"
-    },
-    {
-      "userId": 2,
-      "type": "payment",
-      "value": "19€",
-      "id": 5,
-      "createdAt": "2024-09-18T13:16:44.437Z"
-    }
-  ]
+  "events": []
 }
