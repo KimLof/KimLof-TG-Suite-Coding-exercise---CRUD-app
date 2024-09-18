@@ -4,7 +4,7 @@ import { createUser } from '../api';
 interface AddUserModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onUserAdded: () => void; // Callback to refresh the user list
+  onUserAdded: () => void;
 }
 
 const AddUserModal: React.FC<AddUserModalProps> = ({ isOpen, onClose, onUserAdded }) => {
@@ -15,8 +15,8 @@ const AddUserModal: React.FC<AddUserModalProps> = ({ isOpen, onClose, onUserAdde
     try {
       await createUser({ name });
       setName('');
-      onUserAdded(); // Refresh the user list in the parent component
-      onClose(); // Close the modal
+      onUserAdded(); 
+      onClose(); 
     } catch (error) {
       console.error('Error creating user:', error);
     }

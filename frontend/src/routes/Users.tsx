@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getUsers, deleteUser, updateUser } from '../api'; // Import updateUser function
+import { getUsers, deleteUser, updateUser } from '../api'; 
 import EventModal from './EventModal';
 import AddUserModal from './AddUserModal';
 
@@ -8,8 +8,8 @@ const Users: React.FC = () => {
   const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
   const [isEventModalOpen, setIsEventModalOpen] = useState(false);
   const [isAddUserModalOpen, setIsAddUserModalOpen] = useState(false);
-  const [editingUserId, setEditingUserId] = useState<number | null>(null); // Track which user is being edited
-  const [editedName, setEditedName] = useState<string>(''); // Store the edited name
+  const [editingUserId, setEditingUserId] = useState<number | null>(null); 
+  const [editedName, setEditedName] = useState<string>(''); 
 
   useEffect(() => {
     fetchUsers();
@@ -64,9 +64,9 @@ const Users: React.FC = () => {
 
   const handleSave = async (userId: number) => {
     try {
-      await updateUser(userId, { name: editedName }); // Update the user
-      fetchUsers(); // Refresh the user list
-      setEditingUserId(null); // Exit editing mode
+      await updateUser(userId, { name: editedName });
+      fetchUsers(); 
+      setEditingUserId(null); 
     } catch (error) {
       console.error('Error updating user:', error);
     }
@@ -90,20 +90,20 @@ const Users: React.FC = () => {
           {users.map(user => (
             <tr key={user.id} onClick={() => openEventModal(user.id)}>
               <td>{user.id}</td>
-              <td onClick={(e) => e.stopPropagation() /* Prevent modal from opening */}>
+              <td onClick={(e) => e.stopPropagation() }>
                 {editingUserId === user.id ? (
                   <input
                     type="text"
                     value={editedName}
                     onChange={(e) => setEditedName(e.target.value)}
-                    onClick={(e) => e.stopPropagation()} // Prevent row click when clicking input
+                    onClick={(e) => e.stopPropagation()} // Ei pysty clikkaamaan riviä
                   />
                 ) : (
                   user.name
                 )}
               </td>
               <td>{new Date(user.createdAt).toLocaleString()}</td>
-              <td className="action-buttons" onClick={(e) => e.stopPropagation() /* Prevent modal */}>
+              <td className="action-buttons" onClick={(e) => e.stopPropagation() }>
                 {editingUserId === user.id ? (
                   <>
                     <button className="btn-save" onClick={() => handleSave(user.id)}>Save</button>
@@ -124,12 +124,11 @@ const Users: React.FC = () => {
         </tbody>
       </table>
       
-      {/* Add User Modal */}
+      
       {isAddUserModalOpen && (
         <AddUserModal isOpen={isAddUserModalOpen} onClose={closeAddUserModal} onUserAdded={fetchUsers} />
       )}
 
-      {/* Event Modal */}
       {selectedUserId !== null && (
         <EventModal
           userId={selectedUserId}
