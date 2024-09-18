@@ -1,7 +1,7 @@
-export interface Event {
+export class Event {
     id: number;
     type: string;
-    value: string;
+    value: any;
     createdAt: string;
     userId: number;
   }

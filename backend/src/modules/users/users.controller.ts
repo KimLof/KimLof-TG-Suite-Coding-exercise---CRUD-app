@@ -6,28 +6,31 @@ import { User } from './user.entity';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @Post()
+  @Post() // Lisää käyttäjän
   create(@Body() user: User) {
     return this.usersService.create(user);
   }
 
-  @Get()
+  @Get() // Etsii kaikki käyttäjät
   findAll() {
     return this.usersService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: number) {
-    return this.usersService.findOne(id);
+  @Get(':id') // Etsii tietyn id:n perusteella
+  findOne(@Param('id') id: string) {
+    const numericId = parseInt(id, 10);
+    return this.usersService.findOne(numericId);
   }
 
-  @Put(':id')
-  update(@Param('id') id: number, @Body() user: User) {
-    return this.usersService.update(id, user);
+  @Put(':id')  // Lisää käyttäjän
+  update(@Param('id') id: string, @Body() user: User) {
+    const numericId = parseInt(id, 10);
+    return this.usersService.update(numericId, user);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: number) {
-    return this.usersService.remove(id);
+  @Delete(':id')  // Poistaa käyttäjän
+  remove(@Param('id') id: string) {
+    const numericId = parseInt(id, 10);
+    return this.usersService.remove(numericId);
   }
 }

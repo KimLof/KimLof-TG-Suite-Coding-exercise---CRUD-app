@@ -1,7 +1,5 @@
-
 import { Injectable } from '@nestjs/common';
 import { readFileSync, writeFileSync } from 'fs';
-import { Event } from './event.entity';
 import { join } from 'path';
 
 @Injectable()
@@ -17,7 +15,7 @@ export class EventsService {
     writeFileSync(this.filePath, JSON.stringify(data, null, 2));
   }
 
-  create(event: Event) {
+  create(event: any) {
     const data = this.getData();
     event.id = (data.events.length ? Math.max(...data.events.map(e => e.id)) + 1 : 1);
     event.createdAt = new Date().toISOString();
@@ -34,11 +32,5 @@ export class EventsService {
   findOne(id: number) {
     const data = this.getData();
     return data.events.find(event => event.id === id);
-  }
-
-  remove(id: number) {
-    const data = this.getData();
-    data.events = data.events.filter(event => event.id !== id);
-    this.saveData(data);
   }
 }

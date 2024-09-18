@@ -6,7 +6,7 @@ import { join } from 'path';
 @Injectable()
 export class UsersService {
   private readonly filePath = join(__dirname, '../../../data.json');
-  
+
   private getData() {
     const data = JSON.parse(readFileSync(this.filePath, 'utf8'));
     return data;
@@ -39,17 +39,20 @@ export class UsersService {
     const data = this.getData();
     const userIndex = data.users.findIndex(user => user.id === id);
     if (userIndex > -1) {
+      console.log('Data before update:', data);
       data.users[userIndex] = { ...data.users[userIndex], ...updatedUser };
+      console.log('Data after update:', data);
       this.saveData(data);
       return data.users[userIndex];
     }
+    console.error('User not found:', id);
     return null;
   }
 
   remove(id: number) {
     const data = this.getData();
     data.users = data.users.filter(user => user.id !== id);
-    data.events = data.events.filter(event => event.userId !== id); // Remove related events
+    data.events = data.events.filter(event => event.userId !== id); // Poistaa kaikki käyttäjän eventit
     this.saveData(data);
   }
 }
